@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/layout :: head"></head>
+<body>
+	<header th:replace="layout/layout :: header"></header>
+
+	<div class="container py-4">
+		<div class="card">
+			<div class="card-header" th:text="${title}"></div>
+			<div class="card-body">
+			
+			<h4 class="card-title">
+			<a class="btn btn-primary btn-xs" th:href="@{'/invoice/form/' + ${customer.id}}" th:text="${'crear factura'}"></a></h4>
+			
+				<ul class="list-group">
+					<li class="list-group-item" th:text="${customer.name}"></li>
+					<li class="list-group-item" th:text="${customer.surname}"></li>
+					<li class="list-group-item" th:text="${customer.email}"></li>
+					<li class="list-group-item" th:text="${customer.createAt}"></li>
+				</ul>
+				<div th:if="${#lists.isEmpty(customer.invoices)}"
+					class="alert alert-info my-4"
+					th:text="'No hay facturas asigandas para el cliente ' + ${customer.name} + 
+			' ' + ${customer.surname}"></div>
+
+				<table th:if="${not #lists.isEmpty(customer.invoices)}"
+					class="table table-bordered table-striped my-4">
+					<thead class="thead-inverse">
+						<tr>
+							<th>Folio</th>
+							<th>Descripción</th>
+							<th>Fecha</th>
+							<th>Total</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="invoice: ${customer.invoices}">
+							<td th:text="${invoice.id}"></td>
+							<td th:text="${invoice.description}"></td>
+							<td th:text="${invoice.createAt}"></td>
+							<td th:text="${invoice.calculateTotalItems}"></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	<footer th:replace="layout/layout :: footer"></footer>
+</body>
+</html>
