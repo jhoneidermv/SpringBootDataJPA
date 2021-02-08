@@ -27,6 +27,10 @@ $(document).ready(function(){
 		select: function(event,ui){
 			$("#find_product").val(ui.item.label);
 			return false;
+		},
+		focus: function(event, ui){
+		    event.preventDefault();
+		    $('input[name="buscar_producto"]').val(ui.item.label);
 		}
 	});
 }		
